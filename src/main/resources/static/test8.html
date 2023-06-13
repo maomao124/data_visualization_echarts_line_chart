@@ -1,0 +1,120 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>阶梯折线图-动态</title>
+
+    <script src="./js/echarts.js"></script>
+
+</head>
+
+<style>
+    #container {
+        width: 70vw;
+        height: 70vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+<div id="container"></div>
+<script>
+    //初始化echarts实例
+    var chart = echarts.init(document.getElementById('container'));
+
+    var xData = [1, 2, 3, 4, 5, 6, 7];
+    var data1 = [120, 132, 101, 134, 90, 230, 210];
+    var data2 = [220, 282, 201, 234, 290, 430, 410];
+    var data3 = [450, 432, 401, 454, 590, 530, 510];
+    var index = 8;
+
+    // 指定图表的配置项和数据
+    var option =
+        {
+            title: {
+                text: 'Step Line'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Step Start', 'Step Middle', 'Step End']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: xData
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: 'Step Start',
+                    type: 'line',
+                    step: 'start',
+                    data: data1
+                },
+                {
+                    name: 'Step Middle',
+                    type: 'line',
+                    step: 'middle',
+                    data: data2
+                },
+                {
+                    name: 'Step End',
+                    type: 'line',
+                    step: 'end',
+                    data: data3
+                }
+            ]
+        };
+
+    //使用刚指定的配置项和数据显示图表
+    chart.setOption(option);
+
+    window.setInterval(function ()
+    {
+        xData.shift();
+        xData.push(index++);
+        data1.shift();
+        data1.push(100 + Math.round(Math.random() * 200))
+        data2.shift();
+        data2.push(200 + Math.round(Math.random() * 200))
+        data3.shift();
+        data3.push(400 + Math.round(Math.random() * 200))
+
+        chart.setOption({
+            xAxis: {
+                data: xData
+            },
+            series: [
+                {
+                    data: data1
+                },
+                {
+                    data: data2
+                },
+                {
+                    data: data3
+                }
+            ]
+        })
+    }, 2000)
+
+
+</script>
+
+</body>
+</html>
