@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基础折线图</title>
+
+    <script src="./js/echarts.js"></script>
+
+</head>
+
+<style>
+    #container {
+        width: 70vw;
+        height: 70vh;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+<div id="container"></div>
+<script>
+    //初始化echarts实例
+    var chart = echarts.init(document.getElementById('container'));
+
+    // 指定图表的配置项和数据
+    var option =
+        {
+            xAxis: {
+                type: 'category',
+                data: (function ()
+                {
+                    var data = [];
+                    for (let i = 1; i < 11; i++)
+                    {
+                        data.push("" + i);
+                    }
+                    return data;
+                }())
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: (function ()
+                    {
+                        var data = [];
+                        for (let i = 1; i < 11; i++)
+                        {
+                            data.push(Math.random() * 10 + 5);
+                        }
+                        return data;
+                    }()),
+                    type: 'line'
+                }
+            ]
+        };
+
+    //使用刚指定的配置项和数据显示图表
+    chart.setOption(option);
+
+</script>
+
+</body>
+</html>
